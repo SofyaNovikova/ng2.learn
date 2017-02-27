@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from './shared/models/User';
 
 @Component({
     selector: 'my-app',
@@ -11,45 +12,80 @@ import { Component } from '@angular/core';
       </nav>
     </header>
     <main>
-      <div class="jumbotron">
-        <h1>Welcome to our app </h1>
-        <p>{{ message }}</p>
-      </div>
-      <div *ngIf="users">
-        <div *ngFor="let user of users">
-          {{ user.name }} ({{ user.username }})
+      <div class="row">
+        <div class="col-sm-4">
+          <div *ngIf="users">
+            <ul class="list-group users-list">
+              <li class="list-group-item"
+                  *ngFor="let user of users"
+                  (click)="selectUser(user)"
+                  [class.active]="user === activeUser">
+                {{ user.name }} ({{ user.username }})
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+      <div class="col-sm-8">
+        <div class="jumbotron" *ngIf="activeUser">
+          <h2> {{ activeUser.name }}
+                <small> {{ activeUser.username }} </small>
+          </h2>
+        </div>
+
+        <div class="jumbotron" *ngIf="!activeUser">
+          <span class="glyphicon glyphicon-hand-left"></span>
+          <h2> Choose a user </h2>
         </div>
       </div>
+    </div>
     </main>
     <footer class="text-center">
       Copyright Sofya Novikova &copy; 2017
     </footer>
   `,
     styles: [`
-    .jumbotron {
-      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
-      height: 200px;
-      padding-left: 1%;
-    }
+      .jumbotron {
+        padding-left: 2%;
+        padding-right: 2%;
+      }
+      .users-list {
+        cursor: pointer;
+      }
+
+      li.active {
+
+      }
+
+      .jumbotron .glyphicon {
+        font-size: 60px;
+      }
 
   `]
 })
 export class AppComponent {
-  message = 'Hello!';
-  users = [{
-    id: 1,
-    name: "user 1",
-    username: "user1"
-  },
-  {
-    id: 2,
-    name: "user 2",
-    username: "user2"
-  },
-  {
-    id: 3,
-    name: "user 3",
-    username: "user3"
-  }
-];
+    message: string = 'Hello!';
+    users: User[] = [
+      {
+        id: 1,
+        name: "John Smith",
+        username: "JSmith"
+      },
+      {
+        id: 2,
+        name: "Jane Collins",
+        username: "Collins_J"
+      },
+      {
+        id: 3,
+        name: "Brad Pitt",
+        username: "Brad.Pitt"
+      }
+    ];
+    activeUser: User;
+
+    selectUser(user) {
+      this.activeUser = user;
+    }
 }
