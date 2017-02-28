@@ -1,11 +1,3 @@
-.jumbotron {
-  padding-left: 8%;
-  padding-right: 8%;
-}
-.users-list {
-  cursor: pointer;
-}
-
-.jumbotron .glyphicon {
-  font-size: 60px;
+.active {
+  color: #FFF !important;
 }
